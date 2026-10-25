@@ -13,6 +13,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%}
 #fx{position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr .5s steps(4) infinite}
 @keyframes gr{25%{background-position:-30px 20px}50%{background-position:40px -30px}75%{background-position:-20px -40px}}
 .sub{font-style:italic;color:#b3a27c;margin:-2px 0 10px;letter-spacing:.12em}
+#lg{position:absolute;right:calc(14px + env(safe-area-inset-right));top:calc(10px + env(safe-area-inset-top));z-index:9;padding:6px 14px;margin:0;font-size:11px;border-radius:20px}
 .ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% -10%,#3a0e18 0,#0c1013 52%,#020304 100%);overflow:auto;padding:8px}
 #end{background:rgba(0,0,0,.82)}
 .card{width:min(640px,96%);text-align:center;padding:16px 20px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015));border:1px solid rgba(214,174,106,.3);box-shadow:0 24px 60px #000c,inset 0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(10px)}
@@ -66,7 +67,7 @@ details{border:1px solid rgba(214,174,106,.2);border-radius:12px;padding:8px;mar
 <button id="bs">START GAME</button><button id="bl">LEAVE</button></div></div>
 
 <div id="end" class="ov" hidden><div class="card"><h1 id="et"></h1><div id="er"></div><div id="ew" style="margin:8px"></div>
-<button id="eb">BACK TO LOBBY (host)</button><button id="bq">LEAVE</button></div></div>
+<button id="eb">BACK TO LOBBY (host)</button><button id="bq">LEAVE</button></div></div><button id="lg">РУС</button>
 </div>
 <script>
 const $=i=>document.getElementById(i),S=56,C=22,N=C*3+1,EM=['🔑','⚙️','🔋','🕯️','💎','📜','🧪','🔧'];
@@ -75,9 +76,15 @@ const cv=$('cv'),x=cv.getContext('2d'),dk=document.createElement('canvas'),d=dk.
 let dpr=1,LW=800,LH=400;
 function rs(){dpr=Math.min(devicePixelRatio||1,2);LW=$('w').clientWidth;LH=$('w').clientHeight;cv.width=dk.width=LW*dpr;cv.height=dk.height=LH*dpr}
 addEventListener('resize',rs);rs();
-const er=t=>{$('er_').textContent=t||''};
+const RU={'MIDNIGHT LABYRINTH':'ПОЛНОЧНЫЙ ЛАБИРИНТ','survive the dark, together':'выжить во тьме, вместе','Your name':'Ваше имя','Room code':'Код комнаты','e.g. BONES':'напр. КОСТИ','Host settings (used when you create a room)':'Настройки хоста (при создании комнаты)','Mode':'Режим','Survive the time':'Пережить время','Escape with items':'Побег с предметами','Time (minutes)':'Время (минуты)','Monsters':'Монстры','Max players (survivors = max − monsters)':'Макс. игроков (выжившие = макс − монстры)','Items to find (Escape)':'Предметы для поиска (побег)','Flashlight':'Фонарик','With charge (runs out)':'С зарядом (садится)','Unlimited':'Безлимитно','Off (pure darkness)':'Выкл (полная тьма)','Run button':'Кнопка бега','Off':'Выкл','Killed survivors':'Убитые выжившие','Become monsters':'Становятся монстрами','Are out':'Выбывают','Who becomes the monster':'Кто станет монстром','Random player':'Случайный игрок','Host picks in lobby':'Хост выбирает в лобби','AI only (all players survive)':'Только ИИ (все игроки выживают)','AI survivors (extra)':'ИИ-выжившие (доп.)','Solo vs AI: I play as':'Соло против ИИ: я играю за','Survivor':'Выживший','Monster':'Монстр','Random':'Случайно','AI difficulty':'Сложность ИИ','Easy':'Легко','Normal':'Нормально','Hard':'Сложно','PLAY VS AI (solo)':'ИГРАТЬ ПРОТИВ ИИ (соло)','CREATE ROOM':'СОЗДАТЬ КОМНАТУ','JOIN ROOM':'ВОЙТИ В КОМНАТУ','Online rooms need everyone signed in to claude.ai with access to this page. Landscape play: joystick on the left, buttons on the right.':'Для онлайн-комнат всем нужно войти в claude.ai с доступом к этой странице. Игра в горизонтальном положении: джойстик слева, кнопки справа.','THE HOUSE AWAITS':'ДОМ ЖДЁТ','START GAME':'НАЧАТЬ ИГРУ','LEAVE':'ВЫЙТИ','BACK TO LOBBY (host)':'В ЛОББИ (хост)',
+'Enter a room code.':'Введите код комнаты.','Online play needs a signed-in claude.ai viewer.':'Для онлайн-игры нужно войти в claude.ai.','Connecting…':'Подключение…','That code is already in use.':'Этот код уже занят.','No room found with that code.':'Комната с таким кодом не найдена.','That game already started.':'Эта игра уже началась.','The room is full.':'Комната заполнена.','The host left.':'Хост вышел.','YOU ARE THE MONSTER':'ТЫ — МОНСТР','RUN. HIDE.':'БЕГИ. ПРЯЧЬСЯ.','FLASHLIGHT DIED':'ФОНАРИК СЕЛ','OUT OF BREATH':'НЕТ ДЫХАНИЯ','YOU ESCAPED!':'ТЫ СБЕЖАЛ!','YOU HAVE TURNED…':'ТЫ ПРЕВРАТИЛСЯ…','YOU DIED':'ТЫ УМЕР','Found!':'Найдено!','Hunt them down.':'Выследи их.','Spectating':'Наблюдение','Survive until the time runs out.':'Продержись до конца времени.','find all, then the exit':'найди всё, затем выход','EXIT':'ВЫХОД','LOCKED':'ЗАКРЫТО','AI':'ИИ',' (you)':' (вы)','THE SURVIVORS LIVE':'ВЫЖИВШИЕ ЖИВЫ','THE MONSTERS WIN':'МОНСТРЫ ПОБЕДИЛИ','You won.':'Вы победили.','You lost.':'Вы проиграли.','Winners: ':'Победили: ','nobody':'никто'};
+const FR=[['(tap a player to make them a monster)','(нажмите на игрока, чтобы сделать его монстром)'],['monster(s)','монстр.'],['survivors max','выжив. макс.'],['AI survivors','ИИ-выживших'],['AI only','только ИИ'],['host picks','хост выбирает'],['with charge','с зарядом'],['unlimited','безлимитный'],['flashlight','фонарик'],['monster:','монстр:'],['random','случайно'],[' min',' мин'],['off','выкл'],['Survive','Выжить'],['Escape','Побег']];
+let lang=(()=>{try{return localStorage.getItem('lg')}catch(e){}})()||((navigator.language||'').startsWith('ru')?'ru':'en');
+const T=s=>lang==='ru'&&RU[s]||s,TF=s=>lang==='ru'?FR.reduce((a,f)=>a.split(f[0]).join(f[1]),s):s;
+function tr(){const w=document.createTreeWalker($('w'),NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const p=n.parentElement;if(!p||p.closest('#obj,#tm,#msg,#li,#ll,#et,#er,#ew,#er_,#lc,#lg'))continue;if(n._e===undefined){if(!n.nodeValue.trim())continue;n._e=n.nodeValue}const k=n._e.trim(),v=lang==='ru'&&RU[k];n.nodeValue=v?n._e.replace(k,v):n._e}$('cd').placeholder=T('e.g. BONES');$('lg').textContent=lang==='ru'?'ENG':'РУС';document.documentElement.lang=lang}
+const er=t=>{$('er_').textContent=T(t||'')};
 function show(s){['menu','lobby','end'].forEach(i=>$(i).hidden=i!==s);$('hud').hidden=s!=='game'}
-let mt;function msg(t,ms=2200){$('msg').textContent=t;clearTimeout(mt);mt=setTimeout(()=>$('msg').textContent='',ms)}
+let mt;function msg(t,ms=2200){$('msg').textContent=T(t);clearTimeout(mt);mt=setTimeout(()=>$('msg').textContent='',ms)}
 /* ---------- audio ---------- */
 function A(){try{if(!au){au=new(window.AudioContext||window.webkitAudioContext)();const o=au.createOscillator(),g=au.createGain(),f=au.createBiquadFilter();o.type='sawtooth';o.frequency.value=41;f.type='lowpass';f.frequency.value=140;g.gain.value=.05;o.connect(f);f.connect(g);g.connect(au.destination);o.start();const l=au.createOscillator(),lg=au.createGain();l.frequency.value=.13;lg.gain.value=40;l.connect(lg);lg.connect(f.frequency);l.start()}au.resume()}catch(e){}}
 function tn(f,t,g,ty,f2){if(!au)return;const n=au.currentTime,o=au.createOscillator(),v=au.createGain();o.type=ty||'sine';o.frequency.setValueAtTime(f,n);if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+t);v.gain.setValueAtTime(g,n);v.gain.exponentialRampToValueAtTime(.001,n+t);o.connect(v);v.connect(au.destination);o.start();o.stop(n+t)}
@@ -113,8 +120,8 @@ function bye(t){try{R.leave()}catch(e){}R=null;G=null;joined=0;show('menu');er(t
 function onP(){if(!R)return;P=R.peers();const hp=hostP();if(joined!==2)return;if(!hp)return bye('The host left.');const q=hp.presence;
 if(G&&q.phase==='lobby'){G=null;show('lobby')}else if(!G&&q.phase==='play')begin(hp);
 if(!G)lobbyUI(hp)}
-function lobbyUI(hp){const c=hp.presence.cfg;$('lc').textContent=$('cd').value;$('li').textContent=`${c.md==='s'?'Survive':'Escape'} · ${c.mon} monster(s) · ${c.max-c.mon} survivors max · ${c.t} min · flashlight ${['off','with charge','unlimited'][c.fl]} · monster: ${{r:'random',h:'host picks',a:'AI only'}[c.rm||'r']} · ${c.sb||0} AI survivors${c.rm==='h'&&hp.sameTab?' (tap a player to make them a monster)':''}`;
-$('ll').replaceChildren(...P.filter(p=>p.kind==='viewer').map(p=>{const e=document.createElement('div');const pm=hp.presence.pm||[];e.textContent=(pm.includes(p.peer)?'👹 ':p.presence.host?'👑 ':'👤 ')+(p.presence.n||'?')+(p.isMe?' (you)':'');if(hp.sameTab&&c.rm==='h'){e.style.cursor='pointer';e.onclick=()=>R.presence({pm:pm.includes(p.peer)?pm.filter(q=>q!==p.peer):[...pm,p.peer]})}return e}));$('bs').hidden=!hp.sameTab}
+function lobbyUI(hp){const c=hp.presence.cfg;$('lc').textContent=$('cd').value;$('li').textContent=TF(`${c.md==='s'?'Survive':'Escape'} · ${c.mon} monster(s) · ${c.max-c.mon} survivors max · ${c.t} min · flashlight ${['off','with charge','unlimited'][c.fl]} · monster: ${{r:'random',h:'host picks',a:'AI only'}[c.rm||'r']} · ${c.sb||0} AI survivors${c.rm==='h'&&hp.sameTab?' (tap a player to make them a monster)':''}`);
+$('ll').replaceChildren(...P.filter(p=>p.kind==='viewer').map(p=>{const e=document.createElement('div');const pm=hp.presence.pm||[];e.textContent=(pm.includes(p.peer)?'👹 ':p.presence.host?'👑 ':'👤 ')+(p.presence.n||'?')+(p.isMe?T(' (you)'):'');if(hp.sameTab&&c.rm==='h'){e.style.cursor='pointer';e.onclick=()=>R.presence({pm:pm.includes(p.peer)?pm.filter(q=>q!==p.peer):[...pm,p.peer]})}return e}));$('bs').hidden=!hp.sameTab}
 function start(){const hq=hostP().presence,ps=R.peers().filter(p=>p.kind==='viewer'),c=hq.cfg,roles={};let ids;if(c.solo)ids=(c.sy==='r'?Math.random()<.5:c.sy==='m')?[ps[0].peer]:[];else if(c.rm==='a')ids=[];else if(c.rm==='h')ids=(hq.pm||[]).filter(i=>ps.some(p=>p.peer===i));else{ps.sort(()=>Math.random()-.5);ids=ps.slice(0,Math.min(c.mon,ps.length-(c.sb?0:1))).map(p=>p.peer)}ids=ids.slice(0,c.mon);const sbn=c.sb||(c.solo&&ids.length?2:0);if(ids.length>=ps.length&&!sbn)ids.pop();ps.forEach(p=>roles[p.peer]=ids.includes(p.peer)?'m':'s');
 R.presence({phase:'play',seed:Math.random()*1e9|0,t0:Date.now()+4000,roles,nb:c.mon-ids.length,sb:sbn})}
 function begin(hp){const q=hp.presence,cf=q.cfg,m=mk(q.seed),role=q.roles[myp]||'d',ks=Object.keys(q.roles),ix=ks.indexOf(myp),sp=role==='m'?m.ms[Math.max(0,ix)%3]:m.sv;
@@ -122,7 +129,7 @@ G={cfg:cf,t0:q.t0,m,roles:q.roles,bots:[],dur:cf.t*60,over:0,sc:0,hb:1,tm:0,dg:0
 me={x:sp[0]+(Math.random()-.5)*50,y:sp[1]+(Math.random()-.5)*50,a:role,ang:0,f:0,bat:1,st:1,sl:0,rr:0,lock:0,h:0,ht:0,cd:0,got:[],k:[]};
 if(hp.sameTab){for(let i=0;i<(q.nb||0);i++){const p=m.ms[i%3];G.bots.push({x:p[0],y:p[1],rp:0,n:p,t:2})}for(let i=0;i<(q.sb||0);i++)G.bots.push({s:1,a:'s',t:1,x:m.sv[0]+(i%4-1.5)*30,y:m.sv[1]+((i/4|0)-.5)*30,rp:0,n:m.sv,f:0,g:0})}
 $('bf').hidden=!(cf.fl&&role==='s');$('bh').hidden=!(cf.rn&&role!=='d');
-$('obj').textContent=role==='m'?'Hunt them down.':role==='d'?'Spectating':cf.md==='s'?'Survive until the time runs out.':'';
+$('obj').textContent=role==='m'?T('Hunt them down.'):role==='d'?T('Spectating'):cf.md==='s'?T('Survive until the time runs out.'):'';
 R.presence({a:role,x:me.x|0,y:me.y|0,got:[],k:[],f:0,h:0,g:0});show('game');A();
 msg(role==='m'?'YOU ARE THE MONSTER':'RUN. HIDE.',3000)}
 /* ---------- gameplay ---------- */
@@ -145,7 +152,7 @@ me.cd=Math.max(0,me.cd-dt);if(me.h){me.ht-=dt;if(me.ht<=0){me.h=0;me.cd=5;msg('O
 if(me.rr&&cf.rn===1){me.st-=dt/3.5;if(me.st<=0){me.st=0;me.sl=1;msg('OUT OF BREATH',1500)}}else{me.st=Math.min(1,me.st+dt/(me.sl?5:7));if(me.st>=1)me.sl=0}
 if(me.f){if(cf.fl===1)me.bat-=dt/7;if(me.bat<=0){me.bat=0;me.f=0;me.lock=1;msg('FLASHLIGHT DIED',1800);tn(120,.4,.3,'square',60)}}else{me.bat=Math.min(1,me.bat+dt/(me.lock?5:8));if(me.bat>=1)me.lock=0}
 const col=new Set(me.got);P.forEach(p=>(p.presence.got||[]).forEach(i=>col.add(i)));G.col=col;
-if(me.a==='s'&&!me.h){if(cf.md==='e'){G.m.it.forEach((p,i)=>{if(i<cf.n&&!col.has(i)&&Math.hypot(p[0]-me.x,p[1]-me.y)<34){me.got.push(i);col.add(i);tn(660,.25,.15,'triangle',1000);msg(EM[i]+' Found! '+col.size+'/'+cf.n)}});
+if(me.a==='s'&&!me.h){if(cf.md==='e'){G.m.it.forEach((p,i)=>{if(i<cf.n&&!col.has(i)&&Math.hypot(p[0]-me.x,p[1]-me.y)<34){me.got.push(i);col.add(i);tn(660,.25,.15,'triangle',1000);msg(EM[i]+' '+T('Found!')+' '+col.size+'/'+cf.n)}});
 if(col.size>=cf.n&&Math.hypot(G.m.ex[0]-me.x,G.m.ex[1]-me.y)<70){me.a='e';msg('YOU ESCAPED!',3000);$('bf').hidden=$('bh').hidden=true}}}
 if(me.a==='m')kill(me);
 if(hp&&hp.sameTab){G.bots.forEach(b=>{if(b.s){sbot(b,dt);return}b.rp-=dt;let tg=null,bd=1e9;G.bots.forEach(o=>{if(o.s&&o.a==='s'){const dd=Math.hypot(o.x-b.x,o.y-b.y);if(dd<bd){bd=dd;tg=o}}});P.forEach(p=>{const q=p.presence;if(q.a==='s'&&!q.h){const dd=Math.hypot(q.x-b.x,q.y-b.y);if(dd<bd){bd=dd;tg=q}}});const ch=tg&&bd<650;
@@ -162,7 +169,7 @@ G.pt-=dt;if(G.pt<=0){G.pt=.12;const o={x:me.x|0,y:me.y|0,a:me.a,f:me.f,h:me.h,go
 if(G.left<G.dur-3){const ps=P.filter(p=>p.kind==='viewer'&&G.roles[p.peer]),st=p=>p.presence.a||G.roles[p.peer],ls=ps.filter(p=>st(p)==='s'),es=ps.filter(p=>st(p)==='e');let r=0;
 const bS=G.bl.filter(b=>b.t===1).length,bE=G.bl.filter(b=>b.t===3).length;if(cf.md==='s'){if(!ls.length&&!bS)r='m';else if(G.left<=0)r='s'}else if(!ls.length&&!bS||G.left<=0)r=es.length||bE?'s':'m';if(r)fin(r,ps,st)}}
 function fin(r,ps,st){G.over=r;const win=r==='s'?ps.filter(p=>'se'.includes(st(p))):ps.filter(p=>G.roles[p.peer]==='m'||st(p)==='m'),mine=r==='s'?'se'.includes(me.a):(G.roles[myp]==='m'||me.a==='m');
-$('et').textContent=r==='s'?'THE SURVIVORS LIVE':'THE MONSTERS WIN';$('er').textContent=mine?'You won.':'You lost.';$('ew').textContent='Winners: '+(win.map(p=>p.presence.n||'?').join(', ')||'nobody')+(r==='s'&&G.bl.some(b=>b.t===1||b.t===3)?' + '+G.bl.filter(b=>b.t===1||b.t===3).length+' AI':'');
+G.rf=()=>{$('et').textContent=T(r==='s'?'THE SURVIVORS LIVE':'THE MONSTERS WIN');$('er').textContent=T(mine?'You won.':'You lost.');$('ew').textContent=T('Winners: ')+(win.map(p=>p.presence.n||'?').join(', ')||T('nobody'))+(r==='s'&&G.bl.some(b=>b.t===1||b.t===3)?' + '+G.bl.filter(b=>b.t===1||b.t===3).length+' '+T('AI'):'')};G.rf();
 $('eb').hidden=!hostP().sameTab;setTimeout(()=>{if(G&&G.over)show('end')},1800)}
 /* ---------- drawing ---------- */
 function surv(X,Y,c,n){x.save();x.translate(X,Y);x.fillStyle='#0008';x.beginPath();x.ellipse(0,12,12,5,0,0,7);x.fill();x.fillStyle=c;x.beginPath();x.moveTo(-9,11);x.lineTo(-6,-4);x.lineTo(6,-4);x.lineTo(9,11);x.fill();x.fillStyle='#d8dcd4';x.beginPath();x.arc(0,-11,9,0,7);x.fill();x.fillStyle='#6a3a22';x.beginPath();x.arc(0,-13,9.5,Math.PI,0);x.fill();x.fillRect(-10,-13,3,13);x.fillRect(7,-13,3,13);x.fillStyle='#000';x.fillRect(-5,-12,3.5,4);x.fillRect(2,-12,3.5,4);
@@ -180,10 +187,10 @@ if(T[ty*N+tx]){x.fillStyle=`rgb(${38+h},${38+h},${42+h})`;x.fillRect(X,Y,S,S);x.
 else{x.fillStyle=`rgb(${24+h},${38+h},${40+h})`;x.fillRect(X,Y,S,S);x.fillStyle='#0005';x.fillRect(X,Y,S,1);x.fillRect(X,Y,1,S);if(T[(ty-1)*N+tx]){x.fillStyle='#000a';x.fillRect(X,Y,S,6);x.fillStyle='#0005';x.fillRect(X,Y+6,S,9)}if(h===3){x.fillStyle='#0003';x.fillRect(X+10,Y+14,20,3)}}}
 
 if(cf.md==='e'){x.font='24px serif';x.textAlign='center';G.m.it.slice(0,cf.n).forEach((p,i)=>{if(!G.col.has(i)){x.shadowColor='#fd6';x.shadowBlur=16;x.fillText(EM[i],p[0],p[1]+8)}});x.shadowBlur=0;
-const e=G.m.ex,op=G.col.size>=cf.n;x.globalAlpha=.45+.25*Math.sin(G.tm*4);x.fillStyle=op?'#7fe9a3':'#7a1c26';x.fillRect(e[0]-S,e[1]-S,2*S,2*S);x.globalAlpha=1;x.fillStyle='#fff';x.font='16px serif';x.fillText(op?'EXIT':'LOCKED',e[0],e[1]+5)}
+const e=G.m.ex,op=G.col.size>=cf.n;x.globalAlpha=.45+.25*Math.sin(G.tm*4);x.fillStyle=op?'#7fe9a3':'#7a1c26';x.fillRect(e[0]-S,e[1]-S,2*S,2*S);x.globalAlpha=1;x.fillStyle='#fff';x.font='16px serif';x.fillText(T(op?'EXIT':'LOCKED'),e[0],e[1]+5)}
 const cols=['#5a7a6a','#7a5a6a','#6a6a8a','#8a7a4a','#4a7a8a'];
 P.forEach((p,i)=>{const q=p.presence,k=K[p.peer];if(p.sameTab||!k)return;if(q.a==='s'&&!q.h)surv(k.x,k.y,cols[(p.peer.charCodeAt(0)+i)%5],q.n);else if(q.a==='m')mon(k.x,k.y)});
-G.bl.forEach(b=>{if(b.t===2)mon(b.x,b.y);else if(b.t===1)surv(b.x,b.y,'#7a6a5a','AI')});if(!me.h&&(me.a==='s'||me.a==='m'))me.a==='m'?mon(me.x,me.y):surv(me.x,me.y,'#5a7a6a','');
+G.bl.forEach(b=>{if(b.t===2)mon(b.x,b.y);else if(b.t===1)surv(b.x,b.y,'#7a6a5a',T('AI'))});if(!me.h&&(me.a==='s'||me.a==='m'))me.a==='m'?mon(me.x,me.y):surv(me.x,me.y,'#5a7a6a','');
 d.setTransform(1,0,0,1,0,0);d.globalCompositeOperation='source-over';d.fillStyle='rgba(0,0,0,.975)';d.fillRect(0,0,dk.width,dk.height);d.globalCompositeOperation='destination-out';d.setTransform(s,0,0,s,-cx*s,-cy*s);
 const L=(X,Y,r,a)=>{const g=d.createRadialGradient(X,Y,r*.1,X,Y,r);g.addColorStop(0,`rgba(0,0,0,${a})`);g.addColorStop(1,'rgba(0,0,0,0)');d.fillStyle=g;d.beginPath();d.arc(X,Y,r,0,7);d.fill()},
 cone=(X,Y,a,al)=>{const g=d.createRadialGradient(X,Y,10,X,Y,340);g.addColorStop(0,`rgba(0,0,0,${al})`);g.addColorStop(1,'rgba(0,0,0,0)');d.fillStyle=g;d.beginPath();d.moveTo(X,Y);d.arc(X,Y,340,a-.42,a+.42);d.closePath();d.fill()};
@@ -194,7 +201,7 @@ if(G.dg>0){const g=x.createRadialGradient(LW/2,LH/2,LH*.3,LW/2,LH/2,LW*.7);g.add
 if(G.sc>0){x.fillStyle=`rgba(160,0,0,${Math.min(.55,G.sc/2)})`;x.fillRect(0,0,LW,LH);mon(LW/2,LH/2+30,Math.min(LH/22,6+(1.5-G.sc)*6))}
 if(Date.now()<G.t0){x.fillStyle='rgba(0,0,0,.6)';x.fillRect(0,0,LW,LH)}
 G.hu-=.016;if(G.hu<=0){G.hu=.25;const t=Date.now()<G.t0?'':G.left<60?Math.max(0,Math.ceil(G.left))+'s':(Math.floor(G.left/60)+':'+String(Math.ceil(G.left%60)%60).padStart(2,'0'));$('tm').textContent=t;if(Date.now()<G.t0)$('tm').textContent=Math.ceil((G.t0-Date.now())/1000);
-$('bf').style.setProperty('--p',me.bat*100);$('bh').style.setProperty('--q',me.st*100);if(cf.md==='e'&&me.a==='s')$('obj').textContent=G.m.it.slice(0,cf.n).map((_,i)=>G.col.has(i)?'✅':EM[i]).join(' ')+'  → find all, then the exit'}}
+$('bf').style.setProperty('--p',me.bat*100);$('bh').style.setProperty('--q',me.st*100);if(cf.md==='e'&&me.a==='s')$('obj').textContent=G.m.it.slice(0,cf.n).map((_,i)=>G.col.has(i)?'✅':EM[i]).join(' ')+'  → '+T('find all, then the exit')}}
 let lt=0;function lp(t){requestAnimationFrame(lp);const dt=Math.min(.05,(t-lt)/1000||0);lt=t;if(G&&R){try{up(dt);dr()}catch(e){console.error(e)}}}requestAnimationFrame(lp);
 /* ---------- input ---------- */
 const pad=$('pad'),nub=$('nub');
@@ -204,4 +211,5 @@ $('bf').onpointerdown=e=>{e.preventDefault();tf()};$('bh').onpointerdown=e=>{e.p
 addEventListener('keydown',e=>{kk[e.code]=1;if(e.code==='KeyF')tf()});addEventListener('keyup',e=>kk[e.code]=0);
 function vs(){A();try{document.documentElement.requestFullscreen?.().then(()=>screen.orientation.lock('landscape')).catch(()=>{})}catch(e){}const p={host:1,phase:'lobby',cfg:{...rcfg(),solo:1},n:($('nm').value||'Survivor').slice(0,12)};R={peers:()=>[{peer:'me',sameTab:true,isMe:true,kind:'viewer',presence:p}],presence(o){Object.assign(p,o);setTimeout(onP,0)},onPeers(){},leave(){}};myp='me';joined=2;er('');start()}
 $('ba').onclick=vs;$('bc').onclick=()=>go(1);$('bj').onclick=()=>go(0);$('bs').onclick=start;$('bk').onclick=$('bl').onclick=$('bq').onclick=()=>bye();$('eb').onclick=()=>R.presence({phase:'lobby'});
+$('lg').onclick=()=>{lang=lang==='ru'?'en':'ru';try{localStorage.setItem('lg',lang)}catch(e){}tr();if(R&&joined===2&&!G){const h=hostP();h&&lobbyUI(h)}if(G&&me){if(G.over&&G.rf)G.rf();if(G.cfg.md==='s'||me.a==='m'||me.a==='d')$('obj').textContent=T(me.a==='m'?'Hunt them down.':me.a==='d'?'Spectating':'Survive until the time runs out.')}};tr();
 </script></body></html>
